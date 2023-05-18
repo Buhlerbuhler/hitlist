@@ -1,0 +1,461 @@
+<html>
+<head>
+<title>Html2Pdf</title>
+<style>
+</style>
+  <meta charset="UTF-8" />
+    <title>Linster HIT 
+    </title>
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.12.0/semantic.min.css" />
+<script>function makePDF () {
+  var doc = new jsPDF('p', 'pt', 'a4');
+      var specialElementHandlers = {
+
+      };
+doc.fromHTML(document.getElementById('content'), 15, 15, {
+          'width': 250,
+          'margin': 1,
+          'pagesplit': true,
+          'elementHandlers': specialElementHandlers
+        });
+
+        doc.save('sample-file.pdf');
+}
+function makeMultiPage() {
+
+        var quotes = document.getElementById('content');
+
+        html2canvas(quotes, {
+            onrendered: function(canvas) {
+
+            //! MAKE YOUR PDF
+            var pdf = new jsPDF('p', 'pt', 'letter');
+
+            for (var i = 0; i <= quotes.clientHeight/980; i++) {
+                //! This is all just html2canvas stuff
+                var srcImg  = canvas;
+                var sX      = 0;
+                var sY      = 980*i; // start 980 pixels down for every new page
+                var sWidth  = 900;
+                var sHeight = 980;
+                var dX      = 0;
+                var dY      = 0;
+                var dWidth  = 900;
+                var dHeight = 980;
+
+                window.onePageCanvas = document.createElement("canvas");
+                onePageCanvas.setAttribute('width', 900);
+                onePageCanvas.setAttribute('height', 980);
+                var ctx = onePageCanvas.getContext('2d');
+                // details on this usage of this function: 
+                // https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Using_images#Slicing
+                ctx.drawImage(srcImg,sX,sY,sWidth,sHeight,dX,dY,dWidth,dHeight);
+
+                // document.body.appendChild(canvas);
+                var canvasDataURL = onePageCanvas.toDataURL("image/png", 1.0);
+
+                var width         = onePageCanvas.width;
+                var height        = onePageCanvas.clientHeight;
+
+                //! If we're on anything other than the first page,
+                // add another page
+                if (i > 0) {
+                    pdf.addPage(612, 791); //8.5" x 11" in pts (in*72)
+                }
+                //! now we declare that we're working on that page
+                pdf.setPage(i+1);
+                //! now we add content to that page!
+                pdf.addImage(canvasDataURL, 'PNG', 20, 40, (width*.62), (height*.62));
+
+            }
+            //! after the for loop is finished running, we save the pdf.
+            pdf.save('Test.pdf');
+        }
+      });
+    }
+</script>
+</head>
+<body>
+  <button onclick="makeMultiPage()">PDF</button>
+	<div id="content" >
+
+
+		<form class="ui form"><h1>Linster Construction - H.I.T. List
+                  </h1>
+                  <h4 class="ui dividing header">General Information
+                  </h4>
+                  <div class="two fields">
+                      <div class="field">
+                          <label for="">Supervisor</label>
+                          <input type="text" name="Supervisor" placeholder="Supervisor">
+                      </div>
+                      <div class="field">
+                          <label for="">Safety Rep</label>
+                          <input type="text" name="Safety Rep" placeholder="Safety Rep">
+                      </div>
+                  </div>
+                  <div class="two fields">
+                      <div class="field">
+                          <label for="">Location</label>
+                          <input type="text" name="Location" placeholder="Supervisor">
+                      </div>
+                      <div class="field">
+                          <label for="">Date</label>
+                          <input type="date" name="Safety Rep" placeholder="date Rep">
+                      </div>
+                    </div>
+            
+<h4 class="ui dividing header">Attendance
+                  </h4>
+                  <div class="field">
+                      <div>
+                          <input type="checkbox" name="privacy">
+                          <label>Rick Doerksen</label>
+                      </div>
+                  </div>
+                  <div class="field">
+                      <div>
+                          <input type="checkbox" name="privacy">
+                          <label>Les Thiessen</label>
+                      </div>
+                  </div>
+                  
+                  <div class="field">
+                      <div>
+                          <input type="checkbox" name="top-posts">
+                          <label>Trey Evenson</label>
+                      </div>
+                  </div>
+
+<div class="field">
+    <div >
+        <input type="checkbox" name="washroom-facility">
+        <label>Josh Andre</label>
+    </div>
+</div>
+
+<div class="field">
+    <div >
+        <input type="checkbox" name="sub-contractor-orientation">
+        <label>John Kilmartin</label>
+    </div>
+</div>
+
+<div class="field">
+    <div >
+        <input type="checkbox" name="workplace-safety-act-regulation">
+        <label>Adam Buhler</label>
+    </div>
+</div>
+            <h4 class="ui dividing header">Pre-Start Checklist</h4>
+
+<div class="field">
+  <div>
+    <input type="checkbox" name="privacy" checked>
+    <label>Construction Site Signage</label>
+  </div>
+</div>
+
+<div class="field">
+  <div>
+    <input type="checkbox" name="privacy" checked>
+    <label>MSDS Sheets</label>
+  </div>
+</div>
+
+<div class="field">
+  <div>
+    <input type="checkbox" name="top-posts" checked>
+    <label>Fire Extinguisher</label>
+  </div>
+</div>
+
+<div class="field">
+  <div>
+    <input type="checkbox" name="washroom-facility" checked>
+    <label>Washroom Facility</label>
+  </div>
+</div>
+
+<div class="field">
+  <div>
+    <input type="checkbox" name="sub-contractor-orientation" checked>
+    <label>Sub-Contractor Orientation</label>
+  </div>
+</div>
+
+<div class="field">
+  <div>
+    <input type="checkbox" name="workplace-safety-act-regulation" checked>
+    <label>Workplace Safety Act & Regulation</label>
+  </div>
+</div>
+
+<div class="field">
+  <div>
+    <input type="checkbox" name="communication-device" checked>
+    <label>Communication Device</label>
+  </div>
+</div>
+
+<div class="field">
+  <div>
+    <input type="checkbox" name="first-aid-supply-eyewash" checked>
+    <label>First Aid Supply/Eyewash</label>
+  </div>
+</div>
+
+<div class="field">
+  <div>
+    <input type="checkbox" name="excavation-permit-utility-clearance" checked>
+    <label>Excavation permit/Utility Clearance</label>
+  </div>
+</div>
+
+<div class="field">
+  <div>
+    <input type="checkbox" name="public-protection" checked>
+    <label>Public Protection</label>
+  </div>
+</div>
+
+<h4 class="ui dividing header">Hazard/Inspection Checklist</h4>
+
+<label>
+  <div>
+    <input type="checkbox" name="first-aid-kit-status" checked>
+    <label>First Aid Kit</label>
+  </div>
+</label>
+
+<label>
+  <div>
+    <input type="checkbox" name="fire-extinguisher-status" checked>
+    <label>Fire Extinguisher</label>
+  </div>
+</label>
+
+<label>
+  <div>
+    <input type="checkbox" name="housekeeping-status" checked>
+    <label>Housekeeping</label>
+  </div>
+</label>
+
+<label>
+  <div>
+    <input type="checkbox" name="ladders-walkways-status" checked>
+    <label>Ladders/Walkways</label>
+  </div>
+</label>
+
+<label>
+  <div>
+    <input type="checkbox" name="signage-status" checked>
+    <label>Signage</label>
+  </div>
+</label>
+
+<label>
+  <div>
+    <input type="checkbox" name="guardrail-status" checked>
+    <label>Guardrail</label>
+  </div>
+</label>
+
+<label>
+  <div>
+    <input type="checkbox" name="lockout-tagout-status" checked>
+    <label>Lockout/Tagout</label>
+  </div>
+</label>
+
+<label>
+  <div>
+    <input type="checkbox" name="whmis-sds-status" checked>
+    <label>WHMIS/SDS</label>
+  </div>
+</label>
+
+<label>
+  <div>
+    <input type="checkbox" name="utilities-marked-status" checked>
+    <label>Utilities (Marked)</label>
+  </div>
+</label>
+
+<label>
+  <div>
+    <input type="checkbox" name="electrical-panel-status" checked>
+    <label>Electrical Panel</label>
+  </div>
+</label>
+
+<label>
+  <div>
+    <input type="checkbox" name="access-egress-status" checked>
+    <label>Access/Egress</label>
+  </div>
+</label>
+
+<label>
+  <div>
+    <input type="checkbox" name="heights-fall-protection-status" checked>
+    <label>Heights/Fall Protection</label>
+  </div>
+</label>
+
+<label>
+  <div>
+    <input type="checkbox" name="other1-status">
+    <label>Other:</label>
+    <input type="text" name="other1">
+  </div>
+</label>
+
+<label>
+  <div>
+    <input type="checkbox" name="other2-status">
+    <label>Other:</label>
+    <input type="text" name="other2">
+  </div>
+</label>
+
+                  
+                  <h4 class="ui dividing header">Hazards 1</h4>
+                 
+   <div class="form-field">
+        <label for="identified-hazards">Identified Hazards:</label>
+        <textarea id="identified-hazards" name="identified-hazards"></textarea>
+      </div>
+
+      <div class="form-field">
+        <label for="rank">Rank:</label>
+        <input type="text" id="rank" name="rank">
+      </div>
+
+      <div class="form-field">
+        <label for="controls">Controls:</label>
+        <textarea id="controls" name="controls"></textarea>
+      </div>
+
+      <div class="form-field">
+        <label for="action-by">Action By:</label>
+        <input type="text" id="action-by" name="action-by">
+      </div>
+
+      <div class="form-field">
+        <label for="date-completed">Date Completed:</label>
+        <input type="date" id="date-completed" name="date-completed">
+      </div>
+<h4 class="ui dividing header">Hazards 2</h4>
+                 
+   <div class="form-field">
+        <label for="identified-hazards">Identified Hazards:</label>
+        <textarea id="identified-hazards" name="identified-hazards"></textarea>
+      </div>
+
+      <div class="form-field">
+        <label for="rank">Rank:</label>
+        <input type="text" id="rank" name="rank">
+      </div>
+
+      <div class="form-field">
+        <label for="controls">Controls:</label>
+        <textarea id="controls" name="controls"></textarea>
+      </div>
+
+      <div class="form-field">
+        <label for="action-by">Action By:</label>
+        <input type="text" id="action-by" name="action-by">
+      </div>
+
+      <div class="form-field">
+        <label for="date-completed">Date Completed:</label>
+        <input type="date" id="date-completed" name="date-completed">
+      </div>
+<h4 class="ui dividing header">Hazards 3</h4>
+                 
+   <div class="form-field">
+        <label for="identified-hazards">Identified Hazards:</label>
+        <textarea id="identified-hazards" name="identified-hazards"></textarea>
+      </div>
+
+      <div class="form-field">
+        <label for="rank">Rank:</label>
+        <input type="text" id="rank" name="rank">
+      </div>
+
+      <div class="form-field">
+        <label for="controls">Controls:</label>
+        <textarea id="controls" name="controls"></textarea>
+      </div>
+
+      <div class="form-field">
+        <label for="action-by">Action By:</label>
+        <input type="text" id="action-by" name="action-by">
+      </div>
+
+      <div class="form-field">
+        <label for="date-completed">Date Completed:</label>
+        <input type="date" id="date-completed" name="date-completed">
+      </div>
+
+
+<h4 class="ui dividing header">Toolbox Talk</h4>
+<div class="form-container">
+    <form>
+      <div class="form-field">
+        <label for="topics-discussed">Topics Discussed:</label>
+        <textarea id="topics-discussed" name="topics-discussed"></textarea>
+      </div>
+
+      <div class="form-field">
+        <label for="workers-comments">Worker's Comments:</label>
+        <textarea id="workers-comments" name="workers-comments"></textarea>
+      </div>
+
+      <div class="form-field">
+        <label for="corrective-action">Corrective Action Taken:</label>
+        <textarea id="corrective-action" name="corrective-action"></textarea>
+      </div>
+    </form>
+  </div>
+
+
+
+
+
+
+
+                  
+                  
+                  </div>
+                                </form>
+          </div>
+      </div>
+  </div>
+  
+  
+    <!-- scripts -->
+    <!--
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js">
+</script>
+<script type="text/javascript" src="//cdn.rawgit.com/MrRio/jsPDF/master/dist/jspdf.min.js">
+</script>
+<script type="text/javascript" src="//cdn.rawgit.com/niklasvh/html2canvas/0.5.0-alpha2/dist/html2canvas.min.js">
+</script>
+-->
+    <script src="./lib/jquery.min.js">
+    </script>
+    <script type="text/javascript" src="./lib/jspdf.min.js">
+    </script>
+    <script type="text/javascript" src="./lib/html2canvas.min.js">
+    </script>
+
+    <script type="text/javascript" src="app.js">
+    </script>
+
+</body>
+
+</html>
